@@ -1,0 +1,31 @@
+#cloud-config
+# Add groups to the system
+# Adds the ubuntu group with members 'root' and 'sys'
+# and the empty group devops.
+
+        groups:
+          - ubuntu: [root,sys]
+          - devops
+
+        # Add users to the system. Users are added after groups are added.
+        users:
+          - default
+          - name: okms1017
+            gecos: okms1017
+            shell: /bin/bash
+            primary_group: devops
+            sudo: ALL=(ALL) NOPASSWD:ALL
+            groups: users, admin
+            lock_passwd: false
+            ssh_authorized_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCxphngTUXJJ112VpBNN8Z5doYC3Noh+pu4EwFj+O8taPENIg6bzfute6lPH7OYC1+2wIQvqTdp1P093t/e4UJOLJeOreX8GAIWyl+QRy8AChgJIqhXa1Rq1UJuyrly7QXXIdqA7ukR4j7rR1mzA4h1pmSiVJXITPuF8KQKgLRYgJa3Qrj1quIlA2YjXBGrCbi952TZH97ykx3/xecXJBq3HAbyHXCTSlaunOtMFnUZOjAhsCFcpPvmXMNLa99RuQwWl+inzD2u7rJmRbYkYPh8h9IT0aHIDj9ejayrEZ+bM3hHQVWgnEZ9DHIGspYtCjmXszWQCq4CxVWFZ34bc7mrpA90hiiPJ4dAcLvtFRgJhn8rnDn8u3AfYn2FxJCjVnLbEsz7bw1oW8Wxg9l40PN2Btiqla2raUWSelh692NeW/lyb7UdsRg6l3HSlSzKqz2nQ07OSpyGYeBqvf7MUq4DGVDDWcBYB013yziBkC/tEc+i4e0gYwEp02B1tj/nSI8= okms1017@gmail.com
+
+        # Downloads the apache2 package
+        packages:
+          - apache2
+
+        # Sets the GOPATH & downloads the demo payload
+        runcmd:
+          - sudo apt-get update && sudo apt-get -y install figlet
+          - echo "<pre>" > /var/www/html/index.html 
+          - figlet "Welcome to Seong's Skill Builder" | sudo tee -a /var/www/html/index.html && echo "</pre>" >> /var/www/html/index.html
