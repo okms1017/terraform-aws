@@ -1,31 +1,31 @@
-        data "aws_ami" "seong_amazonlinux2" {
-          most_recent = true
-          filter {
-            name   = "owner-alias"
-            values = ["amazon"]
-          }
+data "aws_ami" "seong_amazonlinux2" {
+  most_recent = true
+  filter {
+    name   = "owner-alias"
+    values = ["amazon"]
+  }
 
-          filter {
-            name   = "name"
-            values = ["amzn2-ami-hvm-*-x86_64-ebs"]
-          }
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+  }
 
-          owners = ["amazon"]
-        }
+  owners = ["amazon"]
+}
 
-        resource "aws_instance" "seong_ec2" {
+resource "aws_instance" "seong_ec2" {
 
-          depends_on = [
-            aws_internet_gateway.seong_igw
-          ]
+  depends_on = [
+    aws_internet_gateway.seong_igw
+  ]
 
-          ami                         = data.aws_ami.seong_amazonlinux2.id
-          associate_public_ip_address = true
-          instance_type               = "t2.micro"
-          vpc_security_group_ids      = ["${aws_security_group.seong_ec2_sg.id}"]
-          subnet_id                   = aws_subnet.seong_subnet1.id
+  ami                         = data.aws_ami.seong_amazonlinux2.id
+  associate_public_ip_address = true
+  instance_type               = "t2.micro"
+  vpc_security_group_ids      = ["${aws_security_group.seong_ec2_sg.id}"]
+  subnet_id                   = aws_subnet.seong_subnet1.id
 
-          user_data = <<-EOF
+  user_data = <<-EOF
                       #!/bin/bash
                       wget https://busybox.net/downloads/binaries/1.31.0-defconfig-multiarch-musl/busybox-x86_64
                       mv busybox-x86_64 busybox
@@ -37,14 +37,14 @@
                       nohup ./busybox httpd -f -p 80 &
                       EOF
 
-          user_data_replace_on_change = true
+  user_data_replace_on_change = true
 
-          tags = {
-            Name = "seong-ec2"
-          }
-        }
+  tags = {
+    Name = "seong-ec2"
+  }
+}
 
-        output "seong_ec2_public_ip" {
-          value       = aws_instance.seong_ec2.public_ip
-          description = "The public IP of the Instance"
-        }
+output "seong_ec2_public_ip" {
+  value       = aws_instance.seong_ec2.public_ip
+  description = "The public IP of the Instance"
+}
