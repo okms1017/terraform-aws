@@ -23,5 +23,5 @@ resource "aws_security_group_rule" "seong_sg_outbound" {
 }
 
 output "aws_security_group_id" {
-  value       = aws_security_group.seong_ec2_sg.id
+  value = aws_security_group.seong_ec2_sg.id
 }
