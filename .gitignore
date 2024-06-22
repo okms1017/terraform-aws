@@ -36,3 +36,6 @@ terraform.rc
 # Ignore SSH Authentication keys
 tf-cloud-init
 tf-cloud-init.pub
+
+# Ignore Terraform Lock file
+*.terraform.lock.hcl
