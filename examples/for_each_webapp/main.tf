@@ -17,11 +17,11 @@ module "vpc" {
 
   for_each = var.project
 
-  cidr = var.vpc_cidr_block
+  cidr = each.value.vpc_cidr_block
 
   azs             = data.aws_availability_zones.available.names
-  public_subnets  = slice(var.public_subnet_cidr_blocks, 0, each.value.public_subnets_per_vpc)
-  private_subnets = slice(var.private_subnet_cidr_blocks, 0, each.value.private_subnets_per_vpc)
+  public_subnets  = slice(each.value.public_subnet_cidr_blocks, 0, each.value.public_subnets_per_vpc)
+  private_subnets = slice(each.value.private_subnet_cidr_blocks, 0, each.value.private_subnets_per_vpc)
 
   enable_nat_gateway = true
   enable_vpn_gateway = false
