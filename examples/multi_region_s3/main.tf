@@ -11,11 +11,25 @@ provider "aws" {
 resource "aws_s3_bucket" "seoul_bucket" {
   provider = aws.primary_region
 
-  bucket = "seoul-region-bucket"
+  bucket = "seoul-region-primary-bucket"
 }
 
 resource "aws_s3_bucket" "singapore_bucket" {
   provider = aws.secondary_region
 
-  bucket = "singapore-region-bucket666"
+  bucket = "singapore-region-secondary-bucket"
+}
+
+resource "aws_s3control_multi_region_access_point" "multi_region_ap" {
+  details {
+    name = "multi-region-ap"
+
+    region {
+      bucket = aws_s3_bucket.seoul_bucket.id
+    }
+
+    region {
+      bucket = aws_s3_bucket.singapore_bucket.id
+    }
+  }
 }
