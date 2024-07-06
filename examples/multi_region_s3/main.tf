@@ -20,6 +20,28 @@ resource "aws_s3_bucket" "singapore_bucket" {
   bucket = "singapore-region-secondary-bucket"
 }
 
+resource "aws_s3_bucket_public_access_block" "seoul_bucket_access_block" {
+  bucket = aws_s3_bucket.seoul_bucket.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+
+  depends_on = [aws_s3_bucket.seoul_bucket]
+}
+
+# resource "aws_s3_bucket_public_access_block" "singapore_bucket_access_block" {
+#   bucket = aws_s3_bucket.singapore_bucket.id
+
+#   block_public_acls       = false
+#   block_public_policy     = false
+#   ignore_public_acls      = false
+#   restrict_public_buckets = false
+
+#   depends_on = [ aws_s3_bucket.singapore_bucket ]
+# }
+
 resource "aws_s3control_multi_region_access_point" "multi_region_ap" {
   details {
     name = "multi-region-ap"
@@ -33,9 +55,9 @@ resource "aws_s3control_multi_region_access_point" "multi_region_ap" {
     }
 
     public_access_block {
-      block_public_acls = false
-      ignore_public_acls = false
-      block_public_policy = false
+      block_public_acls       = false
+      ignore_public_acls      = false
+      block_public_policy     = false
       restrict_public_buckets = false
     }
   }
