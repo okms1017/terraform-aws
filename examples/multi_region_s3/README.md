@@ -5,3 +5,4 @@
 
 # 참고자료
 - https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3control_multi_region_access_point
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block
