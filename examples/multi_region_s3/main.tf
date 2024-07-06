@@ -31,5 +31,12 @@ resource "aws_s3control_multi_region_access_point" "multi_region_ap" {
     region {
       bucket = aws_s3_bucket.singapore_bucket.id
     }
+
+    public_access_block {
+      block_public_acls = false
+      ignore_public_acls = false
+      block_public_policy = false
+      restrict_public_buckets = false
+    }
   }
 }
