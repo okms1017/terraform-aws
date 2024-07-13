@@ -7,7 +7,7 @@ project = {
     public_subnets_per_vpc     = 2,
     private_subnets_per_vpc    = 2,
     instances_per_subnet       = 1,
-    instance_type              = "t3.large",
+    instance_type              = "t3.medium",
     environment                = "dev"
   },
   stg-webapp = {
@@ -17,7 +17,7 @@ project = {
     public_subnets_per_vpc     = 2,
     private_subnets_per_vpc    = 2,
     instances_per_subnet       = 1,
-    instance_type              = "t3.medium",
+    instance_type              = "t3.large",
     environment                = "stg"
   }
 }
